@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite this repository."
+title: "X-MoD: Interpretable Mixture-of-Drives on Bench2Drive — The Action Space, Not the Decomposition"
+authors:
+  - family-names: Kim
+    given-names: Dana
+    alias: lloitesa013
+version: "v0.1"
+date-released: 2026-06-25
+license: MIT
+repository-code: "https://github.com/lloitesa013/xmod-interpretable-driving"
+type: software
+keywords:
+  - autonomous driving
+  - interpretability
+  - mixture of experts
+  - CARLA
+  - Bench2Drive
+  - closed-loop evaluation
+  - imitation learning
+abstract: >-
+  An interpretable Mixture-of-Drives driving policy evaluated closed-loop on Bench2Drive-220
+  (CARLA 0.9.15), with the privileged PDM-Lite expert as teacher. Its safety gate tracks risk
+  (safety-expert / safety-event correlation 0.80). With the model's learned brake output removed
+  and a classical control stack (PID on the predicted target speed, a safety shield, and an
+  anti-stall floor), it completes an unseen route at 100% with zero collisions, robust across three
+  traffic seeds, but it does not generalize uniformly (other unseen routes reach only 18-53%). The
+  repository documents, with explicit non-claims, what the interpretable decomposition does and does
+  not buy for driving, and which attempted fixes (data scaling, failure-correction data) fail and why.
