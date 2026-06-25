@@ -1,14 +1,31 @@
 # X-MoD: Interpretable Mixture-of-Drives on Bench2Drive
 
-An **interpretable** driving policy — a transparent Mixture-of-Drives whose safety gate tracks real
-risk — evaluated **closed-loop** on Bench2Drive-220 (CARLA 0.9.15), with the privileged PDM-Lite
-expert as teacher. This repository releases the paper and an **honest, precisely-bounded** account of
-what the interpretable decomposition does and does not buy for driving.
+**A self-driving policy you can read.** It routes every decision through four named drives —
+*safety, legality, comfort, efficiency* — so you can see *why* it brakes or goes, tested
+**closed-loop** in CARLA / Bench2Drive-220, with the limits reported honestly.
 
-> One line: the gate explains risk faithfully (event/non-event correlation **0.80**); with its learned
-> brake output removed and a classical control stack, the model completes an **unseen** route at
-> **100% / 0 collisions, robust across three traffic seeds** — but it does **not** generalize
-> uniformly, and we show exactly which fixes fail and why.
+**Result at a glance** — on an **unseen** route (24330, not in the training set):
+
+| seed | route completion | collisions | lane departures |
+|:----:|:----------------:|:----------:|:---------------:|
+|  0   |     **100%**     |   **0**    |      **0**      |
+|  1   |     **100%**     |   **0**    |      **0**      |
+|  2   |     **100%**     |   **0**    |      **0**      |
+
+…and the *safety* drive's activation tracks real safety events at correlation **0.80**.
+
+**The honest catch:** it does **not** generalize uniformly — other unseen routes reach only 18–53%,
+and this repo shows exactly which fixes (more data, failure-correction data) fail, and why.
+Bounded, not hyped.
+
+**Run the headline result** (needs CARLA 0.9.15 + Bench2Drive — see [`REPRODUCE.md`](REPRODUCE.md)):
+```bash
+for SEED in 0 1 2; do
+  XMOD_TARGETSPEED=1 XMOD_EGO_MODE=route_v4 XMOD_TM_SEED=$SEED \
+    bash code/scripts/run_xmod_m1_eval.sh 24330 <c0_checkpoint>.pt seed$SEED
+done
+# -> RouteCompletion 100 %  |  CollisionTest 0 times  |  OutsideRouteLanes 0 %   (x3)
+```
 
 ## Claims (honestly bounded)
 - **Explainability (validated).** The router's *safety* expert activation correlates **0.80** with
