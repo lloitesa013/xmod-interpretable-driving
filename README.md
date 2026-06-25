@@ -52,11 +52,17 @@ what the interpretable decomposition does and does not buy for driving.
 Over-Brakes, and What Makes It Drive.* (6 pages.)
 
 ## Code & reproducibility
-The model, the Bench2Drive leaderboard agent, and the evaluation harness are **being packaged for
-reproducible release** (the pipeline is CARLA 0.9.15 / Bench2Drive-220 specific). This will land as a
-follow-up so that what is published actually runs — consistent with the reproducibility bar of the
-companion [Bench2Drive failure-taxonomy](https://github.com/lloitesa013/bench2drive-failure-taxonomy)
-repository. Until then, please open an issue for specifics.
+The complete method is in [`code/`](code/) — the model ([`models/x_mod_vla.py`](code/models/x_mod_vla.py)),
+the Bench2Drive leaderboard agent ([`xmod_b2d_agent.py`](code/xmod_b2d_agent.py)), the longitudinal PID,
+the trainer ([`train_xmod_m1.py`](code/train_xmod_m1.py)), the dataset converter, and the train / eval
+wrappers ([`scripts/`](code/scripts/)). See [`REPRODUCE.md`](REPRODUCE.md) for the pipeline (PDM-Lite
+teacher → convert → train → closed-loop eval) and the exact command for the 3-seed 24330 result.
+
+This is research code from a single-GPU CARLA 0.9.15 / Bench2Drive-220 setup: it is the full, auditable
+method, but turn-key one-click reproduction needs the CARLA `leaderboard` + `scenario_runner` stack and
+a regenerated teacher dataset (not bundled, ~GB). Paths in the scripts reflect the author's environment
+— adjust to yours. It is published consistent with the reproducibility bar of the companion
+[Bench2Drive failure-taxonomy](https://github.com/lloitesa013/bench2drive-failure-taxonomy) repo. Issues welcome.
 
 ## Citation
 See `CITATION.cff`.
